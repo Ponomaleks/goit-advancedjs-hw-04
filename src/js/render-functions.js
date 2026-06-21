@@ -1,10 +1,21 @@
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
+let gallery;
+
+function getLightboxSingleton() {
+  if (!gallery) {
+    gallery = createLightbox();
+  }
+  return gallery;
+}
+
 function createGallery(images) {
+  getLightboxSingleton();
   const galleryContainer = document.querySelector('.gallery');
   const galleryMarkup = createGalleryMarkup(images);
   galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
+  gallery.refresh();
 }
 
 function createGalleryMarkup(images) {
@@ -46,6 +57,7 @@ function createGalleryMarkup(images) {
 }
 
 function clearGallery() {
+  getLightboxSingleton();
   const galleryContainer = document.querySelector('.gallery');
   galleryContainer.innerHTML = '';
 }
@@ -66,4 +78,25 @@ function hideLoader() {
   document.body.classList.remove('loading');
 }
 
-export { createGallery, createLightbox, clearGallery, showLoader, hideLoader };
+function showLoadMoreButton() {
+  const galleryContainer = document.querySelector('.gallery');
+  const loadMoreButton = document.querySelector('.load-more-button');
+  loadMoreButton.disabled = false;
+  galleryContainer.classList.add('show-load-more');
+}
+
+function hideLoadMoreButton() {
+  const galleryContainer = document.querySelector('.gallery');
+  const loadMoreButton = document.querySelector('.load-more-button');
+  loadMoreButton.disabled = true;
+  galleryContainer.classList.remove('show-load-more');
+}
+
+export {
+  createGallery,
+  clearGallery,
+  showLoader,
+  hideLoader,
+  showLoadMoreButton,
+  hideLoadMoreButton,
+};

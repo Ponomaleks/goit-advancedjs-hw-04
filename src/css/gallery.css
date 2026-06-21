@@ -1,6 +1,5 @@
 .gallery {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   gap: 24px;
   margin: 0;
@@ -64,4 +63,32 @@
   .sl-counter {
     color: #fff !important;
   }
+}
+
+.gallery.show-load-more {
+  & + .load-more-container {
+    .load-more-button {
+      display: block;
+    }
+  }
+}
+
+.load-more-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.load-more-button {
+  &[disabled] {
+    &,
+    &:hover {
+      background-color: #d3d3d3;
+    }
+
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  display: none;
 }
